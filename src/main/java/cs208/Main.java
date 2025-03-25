@@ -248,6 +248,7 @@ public class Main
         database.listAllStudents();
     }
 
+    //not sure if it works yet
     private static void menuAddNewStudent()
     {
         System.out.println("Adding new student...");
@@ -258,6 +259,11 @@ public class Main
         try
         {
             // TODO: add your code here
+            System.out.print("Enter the first name: ");
+            firstName = inputScanner.nextLine();
+
+            System.out.print("Enter the last name: ");
+            lastName = inputScanner.nextLine();
 
             System.out.print("Enter the student birth date in ISO format (yyyy-mm-dd): ");
             birthDate = Date.valueOf(inputScanner.nextLine());
@@ -269,26 +275,81 @@ public class Main
         }
 
         // TODO: add your code here
+        Student newStudent = new Student(firstName, lastName, birthDate);
+        database.addNewStudent(newStudent);
     }
 
+    //not sure if it works yet
     private static void menuUpdateExistingStudentInformation()
     {
         System.out.println("Updating existing student information...");
 
-        // TODO: add your code here
+        int id = -1;
+        String firstName = null;
+        String lastName = null;
+        Date birthDate = null;
+        try{
+            System.out.print("Enter the existing student id you want to update: ");
+            id = Integer.parseInt(inputScanner.nextLine());
+            System.out.print("Enter a new student first name: ");
+            firstName = inputScanner.nextLine();
+            System.out.print("Enter a new student last name: ");
+            lastName = inputScanner.nextLine();
+            System.out.print("Enter a student birth date in ISO format (yyyy-mm-dd): ");
+            birthDate = Date.valueOf(inputScanner.nextLine());
+        }
+        catch(Exception e){
+            System.out.println("Invalid input, please try again.");
+            return;
+        }
+        Student studentToUpdate = new Student(id, firstName, lastName, birthDate);
+        database.updateExistingStudentInformation(studentToUpdate);
     }
 
+    //not sure if it works
     private static void menuDeleteExistingStudent()
     {
         System.out.println("Deleting existing student...");
 
-        // TODO: add your code here
+        int id = 0;
+        try
+        {
+            System.out.print("Enter the existing student id you want to delete: ");
+            id = Integer.parseInt(inputScanner.nextLine());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Invalid input, please try again.");
+            return;
+        }
+
+        database.deleteExistingStudent(id);
     }
 
     private static void menuListAllRegisteredStudents()
     {
         System.out.println("Listing all registered students...");
         database.listAllRegisteredStudents();
+    }
+
+    private static void enrollStudentInClass()
+    {
+        System.out.println("Adding Student to class...");
+        String studentId = null;
+        String classId = null;
+        try {
+            System.out.print("Enter the Student id: ");
+            studentId = inputScanner.nextLine();
+
+            System.out.print("Enter the class code: ");
+            classId = inputScanner.nextLine();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Invalid input, please try again.");
+            return;
+        }
+        database.addStudentToClass(studentId, classId);
     }
 
 }
